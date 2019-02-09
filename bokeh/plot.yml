@@ -1,0 +1,32 @@
+default:
+  title:        'default title'
+  fill_color:   '#000000'
+  unit:
+    x:          0.5
+    y:          1
+  scale:
+    x:          1
+    y:          1
+  range:
+    x:
+      min:      0
+      max:      30
+    y:
+      # min:
+      # max:
+  label:
+    x_axis:     'processing time [sec]'
+    y_axis:     'count [-]'
+  size:
+    width:      800
+    height:     800
+data:
+  - title:      'title1'
+    filepath:   'data/sample1.csv'
+    fill_color: '#b3de69'
+  - title:      'title2'
+    filepath:   'data/sample2.csv'
+    fill_color: '#b369de'
+  - title:      'title3'
+    filepath:   'data/sample3.csv'
+    fill_color: '#69b3de'
