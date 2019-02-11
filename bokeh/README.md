@@ -5,6 +5,8 @@
 * graphを重ねる方法を探す
 * 左の軸の桁数を揃えたい
   * 複数のsvgとして，グラフを描画したときに，図がピッタリ重ならないでずれてしまうため
+  * [bokeh\.models\.formatters — Bokeh 1\.0\.4 documentation]( https://bokeh.pydata.org/en/latest/docs/reference/models/formatters.html#bokeh.models.formatters.PrintfTickFormatter )
+  * [bokeh\.models\.tickers — Bokeh 1\.0\.4 documentation]( https://bokeh.pydata.org/en/latest/docs/reference/models/tickers.html#bokeh.models.tickers.SingleIntervalTicker )
 * write `plot.yml` help
 * `plot.yml`のdefault設定がない場合のdefault設定
 * histogram以外のグラフへの対応

@@ -55,6 +55,11 @@ def gen_histogram_graph(title, input_filepath, fill_color, label, range, scale, 
     xaxis = bokeh.models.LinearAxis()
     plot.add_layout(xaxis, 'below')
 
+    # yticker = bokeh.models.CompositeTicker(tickers=[bokeh.models.BasicTicker(), bokeh.models.SingleIntervalTicker(interval=5, num_minor_ticks=5)])
+    # plot.yaxis.formatter = bokeh.models.NumeralTickFormatter(format="4 0000")
+    # plot.yaxis.formatter = bokeh.models.PrintfTickFormatter(format="% 4d")
+    # yaxis = bokeh.models.LinearAxis(ticker=yticker)
+
     yaxis = bokeh.models.LinearAxis()
     plot.add_layout(yaxis, 'left')
 
