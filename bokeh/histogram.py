@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import os.path
 import sys
 import yaml
 import pandas
@@ -12,8 +13,8 @@ import bokeh.io
 import bokeh.models
 
 
-def gen_histogram_graph(title, filepath, fill_color, label, range, scale, unit, size):
-    df = pandas.read_csv(filepath)
+def gen_histogram_graph(title, input_filepath, fill_color, label, range, scale, unit, size, output):
+    df = pandas.read_csv(input_filepath)
     data = df["data"]
 
     # NOTE: for e.g. convert ms -> sec
@@ -69,19 +70,25 @@ def gen_histogram_graph(title, filepath, fill_color, label, range, scale, unit, 
 
     bokeh.io.curdoc().add_root(plot)
 
-    # NOTE: svg
-    plot.output_backend = "svg"
-    svg_filepath = os.path.basename(filepath) + ".svg"
-    print('[output]', svg_filepath)
-    bokeh.io.export_svgs(plot, filename=svg_filepath)
+    def parse_outputpath(output, ext):
+        dirpath = output.get('dirpath') or '.'
+        filename = output.get('filename') or os.path.basename(input_filepath) + '.' + ext
+        filepath = output.get('filepath') or os.path.join(dirpath, filename)
+        return filepath
+    if output.get('svg') is not None:
+        plot.output_backend = "svg"
+        filepath = parse_outputpath(output['svg'], 'svg')
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        print('[svg output]', filepath)
+        bokeh.io.export_svgs(plot, filename=filepath)
+    if output.get('html') is not None:
+        filepath = parse_outputpath(output['html'], 'html')
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        print('[html output]', filepath)
+        bokeh.io.output_file(filename=filepath, mode='inline')
+        bokeh.io.save(plot)
 
-    # NOTE: html
-    # NOTE: for bokeh.io.show() and avoid below warning
-    # UserWarning: save() called but no resources were supplied and output_file(...) was never called, defaulting to resources.CDN
-    html_filepath = os.path.basename(filepath) + ".svg"
-    bokeh.io.output_file(filename=html_filepath, mode='inline')
-    # bokeh.io.save(plot, filename=os.path.basename(filepath) + ".html")
-    # NOTE: このshowはlast plotに統一して表示されるため，for 1 graph?
+    # NOTE: this method show last plot (for only one graph?)
     # bokeh.io.show(plot)
 
 
@@ -109,4 +116,5 @@ if __name__ == '__main__':
         scale = data['scale']
         unit = data['unit']
         size = data['size']
-        gen_histogram_graph(title, filepath, fill_color, label, range, scale, unit, size)
+        output = data['output']
+        gen_histogram_graph(title, filepath, fill_color, label, range, scale, unit, size, output)

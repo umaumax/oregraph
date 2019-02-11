@@ -20,6 +20,15 @@ default:
   size:
     width:      800
     height:     800
+  output:
+    default:    &output_default
+      dirpath:  'output'
+      filename:
+      filepath:
+    svg:
+      <<:       *output_default
+    # html:
+      # <<:     *output_default
 data:
   - title:      'title1'
     filepath:   'data/sample1.csv'
