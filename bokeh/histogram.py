@@ -39,7 +39,7 @@ def gen_histogram_graph(title, input_filepath, fill_color, label, range, scale, 
     # NOTE: same processing
     # x = list(map(lambda x: x * x_unit, range(0, len(fuzzy_range_count))))
     n = len(fuzzy_range_count)
-    x = np.linspace(0, n * x_unit, n)
+    x = np.linspace(0, n * x_unit, n + 1)
 
     source = bokeh.models.ColumnDataSource(dict(x=x, top=y,))
 
