@@ -24,8 +24,20 @@ del lines[:3]
 datas = [x.strip(' ').split() for x in lines]
 # print(datas)
 
-# 09:28:35 PM   UID       PID    %usr %system  %guest    %CPU   CPU  Command
-df = pd.DataFrame(datas, columns=['time', 'AM/PM', 'UID', 'PID', 'usr', 'system', 'guest', 'CPU rate', 'CPU no', 'COMMAND'])
+if len(datas) == 0:
+    print('No data')
+    sys.exit(1)
+
+n_data_header = len(datas[0])
+if n_data_header == 10:
+    # 09:28:35 PM   UID       PID    %usr %system  %guest    %CPU   CPU  Command
+    df = pd.DataFrame(datas, columns=['time', 'AM/PM', 'UID', 'PID', 'usr', 'system', 'guest', 'CPU rate', 'CPU no', 'COMMAND'])
+elif n_data_header == 9:
+    # 14:36:01      UID       PID    %usr %system  %guest    %CPU   CPU  Command
+    df = pd.DataFrame(datas, columns=['time', 'UID', 'PID', 'usr', 'system', 'guest', 'CPU rate', 'CPU no', 'COMMAND'])
+else:
+    print('Syntax error: data length is {}'.format(n_data_header))
+    sys.exit(1)
 
 # NOTE: for debug
 print(df)
