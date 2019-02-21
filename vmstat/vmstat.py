@@ -29,22 +29,27 @@ plot = figure(plot_width=600, plot_height=600, title="[vmstat] CPU usage")
 
 plot.xaxis.axis_label = "elapsed time [sec]"
 plot.yaxis.axis_label = "[%]"
+plot.y_range = bokeh.models.Range1d(start=0.0, end=100.0)
 
-# TODO: range y: 0~100%
 x = np.linspace(0, len(df.index), len(df.index))
 line_us = plot.line(x, df['us'], line_width=4, color="limegreen", alpha=0.5)
 line_sy = plot.line(x, df['sy'], line_width=4, color="crimson", alpha=0.5)
+line_us_sy = plot.line(x, (np.float_(df['us']) + np.float_(df['sy'])).tolist(), line_width=2, color="tomato", alpha=0.75)
 line_id = plot.line(x, df['id'], line_width=4, color="lightsteelblue", alpha=0.5)
 line_wa = plot.line(x, df['wa'], line_width=4, color="dodgerblue", alpha=0.5)
 
 legend = bokeh.models.Legend(items=[
     ("us(user)[%]", [line_us]),
     ("sy(system)[%]", [line_sy]),
+    ("us+sy(user+system)[%]", [line_us_sy]),
     ("id(idle)[%]", [line_id]),
     ("wa(wait)[%]", [line_wa]),
 ], location=(0, 0))
 plot.add_layout(legend, 'below')
 plot.legend.orientation = "horizontal"
+
+plot.xaxis[0].ticker.desired_num_ticks = 10
+plot.yaxis[0].ticker.desired_num_ticks = 10
 
 filepath_svg = filepath + '.svg'
 plot.output_backend = "svg"
