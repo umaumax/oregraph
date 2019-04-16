@@ -1,12 +1,21 @@
 # vmstat visualizer
 
 ## how to use
+### get data
 ```
 vmstat 1 > vmstat.log
 ```
 
+### how to convert log to svg
 ```
 ./vmstat.py vmstat.log
+# output: vmstat.log.svg
+
+cat vmstat.log | ./vmstat.py -
+# output: vmstat.svg
+
+cat vmstat.log | ./vmstat.py /dev/stdin
+# output: vmstat.svg
 ```
 
 ## NOTE

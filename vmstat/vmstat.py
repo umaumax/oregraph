@@ -14,6 +14,8 @@ parser.add_argument('filepath')
 args, extra_args = parser.parse_known_args()
 
 filepath = args.filepath
+if filepath == '-':
+    filepath = '/dev/stdin'
 with open(filepath) as f:
     lines = f.readlines()
 # print(lines)
@@ -52,6 +54,8 @@ plot.xaxis[0].ticker.desired_num_ticks = 10
 plot.yaxis[0].ticker.desired_num_ticks = 10
 
 filepath_svg = filepath + '.svg'
+if filepath == '/dev/stdin':
+    filepath_svg = 'vmstat.svg'
 plot.output_backend = "svg"
 print('[svg output]', filepath_svg)
 bokeh.io.export_svgs(plot, filename=filepath_svg)
