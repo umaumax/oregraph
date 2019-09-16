@@ -1,0 +1,12 @@
+# shape
+# center_rect,cx,cy,w,h
+shape,x,y,w,h
+center_rect,48,64,31,31
+# rect,x,y,w,h
+rect,40,72,4,4
+center_rect,72,64,31,31
+rect,72,72,4,4
+center_rect,72,128,31,31
+rect,72,128,8,8
+center_rect,32,128,63,47
+rect,32,128,8,8
