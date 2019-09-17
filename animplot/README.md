@@ -15,6 +15,7 @@ convert -fuzz 10% -delay 1x8 *.png animation.gif
 * gif保存機能の追加
 
 ## FMI
+* [（続き）Bokeh をつかって行列演算を可視化する\(with animation\) \- Qiita]( https://qiita.com/SatoshiTerasaki/items/b7a5bf61f572aac1e358 )
 ### ColumnDataSource
 * shape毎にsourceを作成し，source.dataの値を変更することでanimationが可能
   * keyはfigureにshapeを登録する際に定義するkeyと一致させる必要がある
