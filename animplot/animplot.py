@@ -59,7 +59,7 @@ def main():
                 'rect_width': w, 'rect_height': h,
             }
         else:
-            print("unknown shapre")
+            print("unknown shape", shape)
             return 1
         for key in data.keys():
             if key not in rect_data:
