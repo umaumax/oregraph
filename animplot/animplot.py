@@ -27,6 +27,7 @@ def main():
     parser.add_argument('--ymin', type=int, default=0)
     parser.add_argument('--ymax', type=int, default=128)
     parser.add_argument('--start', type=int, default=0, help='start with 0~')
+    parser.add_argument('--step', type=int, default=1)
     parser.add_argument('--end', type=int, default=-1, help='start with -1(no end),0~')
     parser.add_argument('--loop', action='store_true')
     # parser.add_argument('-o', '--output-filepath', default='')
@@ -87,7 +88,7 @@ def main():
 
     def update():
         nonlocal cnt
-        cnt += 1
+        cnt += args.step
         cnt = cnt if cnt < end_cnt else (start_cnt if args.loop else end_cnt)
 
         rect_data_step = cnt + 1
