@@ -5,6 +5,11 @@
 bokeh serve --show animplot.py --args --xmax 384 --ymax 256 --fps 2 --loop ./data.csv
 ```
 
+## how to gen gif
+```
+convert -fuzz 10% -delay 1x8 *.png animation.gif
+```
+
 ## TODO
 * csvから読み込む機能を追加
 * gif保存機能の追加

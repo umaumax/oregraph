@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import numpy as np
 
 import bokeh
@@ -33,7 +34,7 @@ def main():
     parser.add_argument('--step', type=int, default=1)
     parser.add_argument('--end', type=int, default=-1, help='start with -1(no end),0~')
     parser.add_argument('--loop', action='store_true')
-    # parser.add_argument('-o', '--output-filepath', default='')
+    parser.add_argument('-o', '--output-dirpath', default='')
     parser.add_argument('-v', '--verbose', action='store_true')
     parser.add_argument('csv_filepath')
     parser.add_argument('args', nargs='*')  # any length of args is ok
@@ -103,6 +104,13 @@ def main():
         rect_source.stream(rect_data, rect_data_step)
 
         f.title.text = "cnt={}".format(cnt)
+        if args.output_dirpath:
+            filepath = args.output_dirpath + "/" + str(cnt).zfill(4) + ".png"
+            print('export {}'.format(filepath))
+            bokeh.io.export_png(f, filename=filepath)
+
+    if args.output_dirpath:
+        os.makedirs(args.output_dirpath, exist_ok=True)
 
     grid = gridplot([[f]])
     plot = column(Div(text="<h2>Rect anim plot</h2>"),
