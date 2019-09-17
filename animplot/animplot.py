@@ -65,7 +65,7 @@ def main():
         for key in data.keys():
             if key not in rect_data:
                 rect_data[key] = []
-            rect_data[key].append(data[key])
+            rect_data[key].insert(0, data[key])
 
     if args.verbose:
         print(rect_data)
