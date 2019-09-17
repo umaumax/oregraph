@@ -2,6 +2,7 @@
 
 import numpy as np
 
+import bokeh
 from bokeh.io import curdoc
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource, Div
@@ -26,6 +27,8 @@ def main():
     parser.add_argument('--xmax', type=int, default=128)
     parser.add_argument('--ymin', type=int, default=0)
     parser.add_argument('--ymax', type=int, default=128)
+    parser.add_argument('--xflipped', action='store_true', help='flip(reverse) x axis or not')
+    parser.add_argument('--yflipped', action='store_true', help='flip(reverse) y axis or not (for image coordinate)')
     parser.add_argument('--start', type=int, default=0, help='start with 0~')
     parser.add_argument('--step', type=int, default=1)
     parser.add_argument('--end', type=int, default=-1, help='start with -1(no end),0~')
@@ -79,6 +82,10 @@ def main():
                x_range=(args.xmin, args.xmax),
                y_range=(args.ymin, args.ymax),
                )
+    if args.xflipped:
+        f.x_range = bokeh.models.Range1d(f.x_range.end, f.x_range.start)
+    if args.yflipped:
+        f.y_range = bokeh.models.Range1d(f.y_range.end, f.y_range.start)
 
     f.rect(x='rect_x', y='rect_y', width='rect_width', height='rect_height', source=rect_source, fill_color="red", fill_alpha=0.1)
 
