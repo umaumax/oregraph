@@ -30,7 +30,7 @@ def main():
     parser.add_argument('--end', type=int, default=-1, help='start with -1(no end),0~')
     parser.add_argument('--loop', action='store_true')
     # parser.add_argument('-o', '--output-filepath', default='')
-    # parser.add_argument('-v', '--verbose', action='store_true')
+    parser.add_argument('-v', '--verbose', action='store_true')
     parser.add_argument('csv_filepath')
     parser.add_argument('args', nargs='*')  # any length of args is ok
 
@@ -66,7 +66,8 @@ def main():
                 rect_data[key] = []
             rect_data[key].append(data[key])
 
-    print(rect_data)
+    if args.verbose:
+        print(rect_data)
 
     rect_n = len(rect_data["rect_x"])
     rect_source = ColumnDataSource(data=dict(
