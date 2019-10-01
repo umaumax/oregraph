@@ -1,22 +1,37 @@
 {
-  "name": "1",
+  "title": "Icicle tree visualization sample",
+  "name": "function 1()",
   "children": [
     {
-      "name": "1-1",
-      "value": 40
+      "name": "function 1-1()",
+      "value": 32.5
     },
     {
-      "name": "1-2",
+      "name": "function 1-2()",
       "children": [
         {
-          "name": "1-2-1",
-          "value": 50
+          "name": "function 1-2-1()",
+          "value": 35
         },
         {
-          "name": "1-2-2",
-          "value": 10
+          "name": "function 1-2-2()",
+          "children": [
+            {
+              "name": "function 1-2-2-1()",
+              "value": 10
+            },
+            {
+              "name": "function 1-2-2-2()",
+              "value": 25
+            }
+          ]
         }
       ]
+    },
+    {
+      "name": "function 3()",
+      "value": 7.5,
+      "color": "blue"
     }
   ]
 }
