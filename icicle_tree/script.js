@@ -2,20 +2,42 @@ $(function() {
     var json_url = "https://raw.githubusercontent.com/d3/d3-hierarchy/v1.1.8/test/data/flare.json";
     json_url = "./sample.json";
     d3.json(json_url).then(function(data) {
-        var width = 640
-        var height = 480
+        var graph_pattern = 'horizontal';
+        // var graph_pattern = 'vertical';
+        var graph_func_map_table = {
+            'horizontal': {
+                'size': (width, height) => [height, width],
+                'sort': (a, b) => b.height - a.height || b.value - a.value,
+                'transform': d => `translate(${d.y0},${d.x0})`,
+                'width': d => d.y1 - d.y0,
+                'height': d => d.x1 - d.x0,
+                'ratio': (d, width, height) => (d.x1 - d.x0) / height,
+            },
+            'vertical': {
+                'size': (width, height) => [width, height],
+                'sort': (a, b) => b.width - a.width || b.value - a.value,
+                'transform': d => `translate(${d.x0},${d.y0})`,
+                'width': d => d.x1 - d.x0,
+                'height': d => d.y1 - d.y0,
+                'ratio': (d, width, height) => (d.y1 - d.y0) / width,
+            },
+        };
+        var grap_func_map = graph_func_map_table[graph_pattern];
+        var width = 1200;
+        var height = 640;
         var sort_flag = false;
         var partition;
         if (sort_flag) {
             partition = data => d3.partition()
-                .size([height, width])
+                .size(grap_func_map['size'](width, height))
                 .padding(1)
                 (d3.hierarchy(data)
                     .sum(d => d.value)
-                    .sort((a, b) => b.height - a.height || b.value - a.value))
+                    .sort(grap_func_map['sort'])
+                )
         } else {
             partition = data => d3.partition()
-                .size([height, width])
+                .size(grap_func_map['size'](width, height))
                 .padding(1)
                 (d3.hierarchy(data)
                     .sum(d => d.value)
@@ -44,11 +66,11 @@ $(function() {
             .selectAll("g")
             .data(root.descendants())
             .join("g")
-            .attr("transform", d => `translate(${d.y0},${d.x0})`);
+            .attr("transform", grap_func_map['transform']);
 
         cell.append("rect")
-            .attr("width", d => d.y1 - d.y0)
-            .attr("height", d => d.x1 - d.x0)
+            .attr("width", grap_func_map['width'])
+            .attr("height", grap_func_map['height'])
             .attr("fill-opacity", 0.6)
             .attr("fill", d => {
                 if ('color' in d.data) {
@@ -60,8 +82,7 @@ $(function() {
                     while (d.depth > 1) d = d.parent;
                     return children_color(d.data.name);
                 } else if (color_pattern == 'ratio') {
-                    var value = (d.x1 - d.x0) / height;
-                    var ratio = value;
+                    var ratio = grap_func_map['ratio'](d, width, height);
                     if (has_child) {
                         return parent_ratio_color(ratio / scale);
                     }
@@ -71,7 +92,7 @@ $(function() {
                 }
             });
 
-        const text = cell.filter(d => (d.x1 - d.x0) > 16).append("text")
+        const text = cell.append("text")
             .attr("x", font_size)
             .attr("y", font_size)
             .attr("dx", "0em")
