@@ -1,8 +1,8 @@
 # threads
 
-## for auto downloading tools
+## how to setup
 ```
-pip install geckodriver-autoinstaller
+pip install pandas bokeh selenium geckodriver-autoinstaller
 ```
 [PythonでWebDriverのインストールを自動化したり補助するモジュールまとめ \- Qiita]( https://qiita.com/QutaPase/items/f895e7f1ba887fa52ce1 )
 
@@ -11,6 +11,10 @@ pip install geckodriver-autoinstaller
 > Selenium, GeckoDriver, Firefox
 > Necessary for Exporting Plots to PNG and SVG images.
 
+## how to get data
+```
+while true; do sleep 1.0; bash -c "clear; { date +%s%3N; ps -FLl -p $PID | awk 'NR>1 {print \$6, \$2}'; }  | tee -a ps.log"; done
+```
 
 ## how to use
 ```
