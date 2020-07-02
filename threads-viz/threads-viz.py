@@ -51,6 +51,12 @@ plot = figure(
 
 plot.xaxis.axis_label = "elapsed time [msec]"
 plot.yaxis.axis_label = "[tid]"
+plot.x_range = bokeh.models.Range1d(
+    start=float(df['time'].min()), end=float(df['time'].max())
+)
+plot.y_range = bokeh.models.Range1d(
+    start=int(df['tid'].min()), end=int(df['tid'].max())
+)
 
 x = np.linspace(0, len(df.index), len(df.index))
 
@@ -77,20 +83,42 @@ colormap = {
     'Z': 'blue',
 }
 colors = [colormap[x] for x in df['state']]
+legendmap = {
+    'D': 'uninterruptible sleep (usually IO)',
+    'R': 'running or runnable (on run queue)',
+    'S': 'interruptible sleep (waiting for an event to complete)',
+    'T': 'stopped by job control signal',
+    't': 'stopped by debugger during the tracing',
+    'W': 'paging (not valid since the 2.6.xx kernel)',
+    'X': 'dead (should never be seen)',
+    'Z': 'defunct ("zombie") process, terminated but not reaped by its parent',
+}
+legends = [legendmap[x] for x in df['state']]
 source = bokeh.models.ColumnDataSource(dict(
     x=df['time'],
     y=df['tid'],
     color=colors,
-    label=df['state'],
+    label=legends,
 ))
 
-plot.circle(
+# rect version (no auto range)
+plot.rect(
     x='x',
     y='y',
-    size=4,
+    width=1000,
+    height=1,
     color='color',
     legend_field='label',
     source=source)
+
+# circle version (auto range)
+# plot.circle(
+# x='x',
+# y='y',
+# size=4,
+# color='color',
+# legend_field='label',
+# source=source)
 
 filepath_svg = filepath + '.svg'
 plot.output_backend = "svg"
