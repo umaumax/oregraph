@@ -84,14 +84,14 @@ colormap = {
 }
 colors = [colormap[x] for x in df['state']]
 legendmap = {
-    'D': 'uninterruptible sleep (usually IO)',
-    'R': 'running or runnable (on run queue)',
-    'S': 'interruptible sleep (waiting for an event to complete)',
-    'T': 'stopped by job control signal',
-    't': 'stopped by debugger during the tracing',
-    'W': 'paging (not valid since the 2.6.xx kernel)',
-    'X': 'dead (should never be seen)',
-    'Z': 'defunct ("zombie") process, terminated but not reaped by its parent',
+    'D': 'D: uninterruptible sleep (usually IO)',
+    'R': 'R: running or runnable (on run queue)',
+    'S': 'S: interruptible sleep (waiting for an event to complete)',
+    'T': 'T: stopped by job control signal',
+    't': 't: stopped by debugger during the tracing',
+    'W': 'W: paging (not valid since the 2.6.xx kernel)',
+    'X': 'X: dead (should never be seen)',
+    'Z': 'Z: defunct ("zombie") process, terminated but not reaped by its parent',
 }
 legends = [legendmap[x] for x in df['state']]
 source = bokeh.models.ColumnDataSource(dict(
