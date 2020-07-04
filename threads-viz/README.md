@@ -71,3 +71,8 @@ TID D R S T t W X Z
 2 1 1 1 0 0 0 0 0
 3 2 1 0 0 0 0 0 0
 ```
+
+### how to use
+```
+./threads-viz.py thread-status-count-plot.data -t countup
+```
