@@ -6,8 +6,7 @@ import pandas as pd
 import numpy as np
 import bokeh.models
 import bokeh.io
-from bokeh.plotting import figure, output_file, show
-from selenium import webdriver
+from bokeh.plotting import figure
 import geckodriver_autoinstaller
 
 geckodriver_autoinstaller.install()
