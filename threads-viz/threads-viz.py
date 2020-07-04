@@ -101,6 +101,10 @@ source = bokeh.models.ColumnDataSource(dict(
     label=legends,
 ))
 
+# NOTE: this code must be before plot.rect() and so on
+plot.add_layout(bokeh.models.Legend(), 'above')
+plot.legend.orientation = "horizontal"
+
 # rect version (no auto range)
 plot.rect(
     x='x',
