@@ -41,6 +41,9 @@ e.g. ps.log
 
 ```
 cat ps.log | awk 'NF==1{t=$1;} NF==2{print t,$1,$2}' > plot.data
+
+# set start time to 0
+cat ps.log | awk 'NF==1{if(base==0) { base=$1; }; t=$1-base;} NF==2{print t,$1,$2}' > plot.data
 ```
 
 e.g. plot.data
