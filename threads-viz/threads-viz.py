@@ -93,10 +93,10 @@ def process_time_series(plot, filepath):
     plot.xaxis.axis_label = "elapsed time [msec]"
     plot.yaxis.axis_label = "tid [-]"
     plot.x_range = bokeh.models.Range1d(
-        start=float(df['time'].min()), end=float(df['time'].max())
+        start=int(df['time'].astype(int).min()), end=int(df['time'].astype(int).max())
     )
     plot.y_range = bokeh.models.Range1d(
-        start=int(df['tid'].min()), end=int(df['tid'].max())
+        start=int(df['tid'].astype(int).min()), end=int(df['tid'].astype(int).max())
     )
 
     x = np.linspace(0, len(df.index), len(df.index))
