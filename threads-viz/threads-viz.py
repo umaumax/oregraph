@@ -18,11 +18,18 @@ parser.add_argument(
     '--type',
     default='time-series',
     help='time-series, countup')
+parser.add_argument(
+    '-w',
+    '--width',
+    default=1000.0,
+    type=float,
+    help='default is 1000ms')
 parser.add_argument('filepath')
 
 args, extra_args = parser.parse_known_args()
 
 filepath = args.filepath
+width = args.width
 
 # man ps
 """
@@ -118,7 +125,7 @@ def process_time_series(plot, filepath):
     plot.rect(
         x='x',
         y='y',
-        width=1000,
+        width=width,
         height=1,
         color='color',
         legend_field='label',
